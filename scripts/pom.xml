@@ -12,14 +12,59 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <script.folder.main>${project.basedir}/src/main/js</script.folder.main>
+        <script.folder.test>${project.basedir}/src/test/js</script.folder.test>
     </properties>
     <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jslint-maven-plugin</artifactId>
+                <version>1.0.1</version>
+                <configuration>
+                    <sourceJsFolder>${script.folder.main}</sourceJsFolder>
+                    <predefinedVars></predefinedVars>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>jslint</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.samaxes.maven</groupId>
+                <artifactId>maven-minify-plugin</artifactId>
+                <version>1.3.5</version>
+                <executions>
+                    <execution>
+                        <id>final</id>
+                        <phase>compile</phase>
+                        <configuration>
+                            <webappSourceDir>${script.folder.main}/</webappSourceDir>
+                            <webappTargetDir>${project.build.outputDirectory}</webappTargetDir>
+                            <jsSourceDir>/</jsSourceDir>
+                            <jsTargetDir>/</jsTargetDir>
+                            <jsSourceIncludes>
+                                <jsInclude>**/*.js</jsInclude>
+                            </jsSourceIncludes>
+                            <jsFinalFile>final.js</jsFinalFile>
+                        </configuration>
+                        <goals>
+                            <goal>minify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
         <resources>
             <resource>
                 <directory>${project.basedir}/src/main/resources</directory>
             </resource>
             <resource>
-                <directory>${project.basedir}/src/main/js</directory>
+                <directory>${script.folder.main}</directory>
             </resource>
         </resources>
         <testResources>
@@ -27,7 +72,7 @@
                 <directory>${project.basedir}/src/test/resources</directory>
             </testResource>
             <testResource>
-                <directory>${project.basedir}/src/test/js</directory>
+                <directory>${script.folder.test}</directory>
             </testResource>
         </testResources>
     </build>
