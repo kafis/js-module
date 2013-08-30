@@ -14,6 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <script.folder.main>${project.basedir}/src/main/javascript</script.folder.main>
         <script.folder.test>${project.basedir}/src/test/javascript</script.folder.test>
+        <script.folder.resources>${project.basedir}/src/main/resources</script.folder.resources>
     </properties>
     <build>
         <plugins>
@@ -47,7 +48,9 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <!-- configuration properties will go here -->
+                    <preloadSources>
+                        <source>${script.folder.resources}/angular/angular.min.js</source>
+                    </preloadSources>
                 </configuration>
             </plugin>
 
