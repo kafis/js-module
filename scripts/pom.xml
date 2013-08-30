@@ -15,6 +15,7 @@
         <script.folder.main>${project.basedir}/src/main/javascript</script.folder.main>
         <script.folder.test>${project.basedir}/src/test/javascript</script.folder.test>
         <script.folder.resources>${project.basedir}/src/main/resources</script.folder.resources>
+        <script.folder.testResources>${project.basedir}/src/test/resources</script.folder.testResources>
     </properties>
     <build>
         <plugins>
@@ -24,7 +25,7 @@
                 <version>1.0.1</version>
                 <configuration>
                     <sourceJsFolder>${script.folder.main}</sourceJsFolder>
-                    <predefinedVars></predefinedVars>
+                    <predefinedVars>angular</predefinedVars>
                 </configuration>
                 <executions>
                     <execution>
@@ -49,7 +50,9 @@
                 </executions>
                 <configuration>
                     <preloadSources>
+                        <source>${script.folder.resources}/jquery/jquery-2.0.3.min.js</source>
                         <source>${script.folder.resources}/angular/angular.min.js</source>
+                        <source>${script.folder.testResources}/angular-mocks.js</source>
                     </preloadSources>
                 </configuration>
             </plugin>
