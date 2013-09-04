@@ -78,8 +78,17 @@ describe('The Validation Module', function() {
             expect(ngModelCtrl.$setViewValue).toHaveBeenCalledWith(undefined);
             expect(element).not.toHaveClass('ng-pending');
         });
+        it('should set the pending key on the control while executing', function() {
+            ngModelCtrl.$modelValue = "test";
+            serverValidationCtrl.$modelChanged();
+            serverValidationCtrl.validate();
+            expect(ngModelCtrl.$pending.test).toBe(true);
+            validator.getDefered().reject(true);
+            scope.$digest();
+            expect(ngModelCtrl.$pending.test).toBe(false);
+        });
     });
 
-    
+
 
 });
