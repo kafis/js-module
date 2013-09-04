@@ -1,8 +1,12 @@
 (function(angular) {
     var module = angular.module('hunter.validation', []),
+            ServerValidationController,
             ServerSideValidationDirective,
+
             EMailAvailableDirective,
-            ServerValidationController;
+
+            EqualToDirective
+            ;
 
     ServerValidationController = function($scope, $element) {
         var ngModelCtrl = {},
@@ -91,5 +95,23 @@
     };
     EMailAvailableDirective.$inject = ["$http"];
     module.directive("emailAvailable", EMailAvailableDirective);
+
+    EqualToDirective = function(){
+        return{
+          restrict:'A',
+          require:'ngModel',
+          scope:{equalTo:"="},
+          link: function(scope, elm, attr, ctrl) {
+            ctrl.$parsers.push(function(value){
+                    ctrl.$setValidity("equalTo", value === scope.equalTo);
+                    return value;
+            });
+            scope.$watch('equalTo',function(newValue){
+               ctrl.$setViewValue(ctrl.$modelValue);
+            });
+          }
+        };
+    };
+    module.directive("equalTo",EqualToDirective);
 
 }(angular));

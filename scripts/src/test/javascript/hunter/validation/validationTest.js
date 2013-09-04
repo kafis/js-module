@@ -90,5 +90,47 @@ describe('The Validation Module', function() {
     });
 
 
+    describe('The EqualsToDirective', function() {
+        var scope,
+            inputA,
+            inputB;
+        beforeEach(inject(function($compile, $rootScope){
+            scope = $rootScope.$new();
+            scope.password="";
 
+            inputA = angular.element('<input name="password" ng-model="password" type="text"/>');
+            inputB = angular.element('<input name="repeat" ng-model="repeat" type="text" equal-to="password"/>');
+
+            form = angular.element('<form name="test"/>').append(inputA).append(inputB);
+
+            $compile(form)(scope);
+            scope.$digest();
+        }));
+
+        it('should be valid, when both values are equasl',function(){
+           scope.test.repeat.$setViewValue("password");
+           scope.test.password.$setViewValue("password");
+           scope.$digest();
+           expect(scope.test.repeat.$valid).toBe(true);
+           expect(scope.test.$valid).toBe(true);
+        });
+        it('should be invalid, when both values are not equasl',function(){
+            scope.test.repeat.$setViewValue("passwo");
+           scope.test.password.$setViewValue("password");
+
+           scope.$digest();
+           expect(scope.test.repeat.$valid).toBe(false);
+           expect(scope.test.$valid).toBe(false);
+        });
+        it('should be invalid, when the value of the first is changed',function(){
+           scope.test.password.$setViewValue("password");
+           scope.test.repeat.$setViewValue("password");
+scope.$digest();
+           scope.test.password.$setViewValue("passwor");
+           scope.$digest();
+           expect(scope.test.repeat.$valid).toBe(false);
+           expect(scope.test.$valid).toBe(false);
+        });
+
+    });
 });
