@@ -51,6 +51,7 @@
                 <configuration>
                     <preloadSources>
                         <source>${script.folder.resources}/jquery/jquery-2.0.3.min.js</source>
+                        <source>${script.folder.testResources}/jasmine-jquery.js</source>
                         <source>${script.folder.testResources}/angular.js</source>
                         <source>${script.folder.testResources}/angular-mocks.js</source>
                     </preloadSources>

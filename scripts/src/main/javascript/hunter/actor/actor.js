@@ -23,7 +23,6 @@
         return {
             restrict: 'A',
             link: function($scope, element, attributes, ctrl) {
-
                 Actor.accountkey = parseInt(attributes.accountkey,10);
             }};
     };
